@@ -31,7 +31,7 @@ from django.db import connection
 import pdfkit
 from django.template.loader import get_template
 from django.core.paginator import Paginator, EmptyPage,PageNotAnInteger
-import pyrebase
+# import pyrebase
 from meetings.notice import createNotice
 
 

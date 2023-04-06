@@ -116,6 +116,23 @@ def similarSentence(request):
     #start=datetime.now()
     res=search_similiar_bert(query,type)
     #print(datetime.now()-start)
+    print(res)
+    if(len(res)>0 & res[0]['semScore']<0.6):
+        index_bert,model=load_model(data['type'])
+        new_vector = model.encode([data['text']])
+        faiss.normalize_L2(new_vector)
+        #print(new_vector)    
+        if data['type']=="crime":
+            obj = crimeSen.objects.create(lesson=data['query'])
+        elif data['type']=="rally":
+            obj = rallySen.objects.create(lesson=data['query'])
+        elif data['type']=="calamity":
+            obj = calamitySen.objects.create(lesson=data['query'], injured= data['injured'], peopleAffected=data['peopleAffected'],cost= data['cost'],police= data['police'],ambulance=data['ambulance'],ndrfPersonnels=data['ndrfPersonnels'])
+        elif data['type']=="epidemic":
+            obj = epidemicSen.objects.create(lesson=data['query'])
+        elif data['type']=="publicGathering":
+            obj = publicGatheringSen.objects.create(lesson=data['query'])
+        
     res=json.dumps(res)
     return JsonResponse(res,status=status.HTTP_200_OK, safe=False)
 

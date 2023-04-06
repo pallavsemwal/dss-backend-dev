@@ -8,6 +8,7 @@ class crimeSen(models.Model):
     date=models.TextField(null=True)
     lesson=models.TextField(null=False)
     count=models.IntegerField(default=1)
+    
 
 class calamitySen(models.Model):
     index=models.AutoField(primary_key=True)

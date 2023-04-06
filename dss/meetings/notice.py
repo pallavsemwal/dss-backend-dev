@@ -1,7 +1,7 @@
 from django.db import connection
 import pdfkit
 from django.template.loader import get_template
-import pyrebase
+# import pyrebase
 from django.shortcuts import render
 import random
 from django.template.loader import render_to_string
@@ -31,9 +31,10 @@ def createNotice(request,data):
         "appId": "1:99269182406:web:ce541eb547617766ac68c7",
         "measurementId": "G-4MG5TT1N2K"
     }
-    firebase = pyrebase.initialize_app(config)
-    storage = firebase.storage()
-    path_on_cloud = "meeting/"+data['committeeName']+data['scheduledTime'][0:8]+random_char(random.randint(9, 20))+"_notice.pdf"
+    # firebase = pyrebase.initialize_app(config)
+    # storage = firebase.storage()
+    # path_on_cloud = "meeting/"+data['committeeName']+data['scheduledTime'][0:8]+random_char(random.randint(9, 20))+"_notice.pdf
+    # "
     path_local = 'meetings/templates/notice.pdf'
     print(storage.child(path_on_cloud).put(path_local))
     print(1)
