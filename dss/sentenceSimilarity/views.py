@@ -4,7 +4,7 @@ import numpy as np
 import faiss
 import joblib
 from deep_translator import GoogleTranslator
-
+from django.core import serializers
 from datetime import datetime
 from http.client import HTTPResponse
 from telnetlib import STATUS
@@ -63,8 +63,12 @@ def fetch_info(id,semScore,type):
     
 
     meta_dict = dict()
+    print(info.index)
     meta_dict['lesson'] = info.lesson
     meta_dict['semScore'] = semScore
+    # d=serializers.serialize('json',info)
+    # d=json.loads(d)
+    meta_dict['index']= info.index
     return meta_dict
     
 def search(query, top_k, index, model,type):
@@ -98,8 +102,9 @@ def search_similiar_bert(query,type):
         similar_lesson_bert.append (
                 {
                     #'Relevance': (p[1] * 100),
-                    'Lesson': result['lesson'],
-                    'similarityScore' : result['semScore']
+                    'lesson': result['lesson'],
+                    'similarityScore' : result['semScore'],
+                    'index':result['index']
                 }
 
             )
@@ -116,10 +121,10 @@ def similarSentence(request):
     #start=datetime.now()
     res=search_similiar_bert(query,type)
     #print(datetime.now()-start)
-    print(res)
-    if(len(res)>0 & res[0]['semScore']<0.6):
-        index_bert,model=load_model(data['type'])
-        new_vector = model.encode([data['text']])
+    print(res[0])
+    if(len(res)>0 and res[0]['similarityScore']<0.6):
+        index_bert=load_model(data['type'])
+        new_vector = model.encode([data['query']])
         faiss.normalize_L2(new_vector)
         #print(new_vector)    
         if data['type']=="crime":
@@ -127,12 +132,16 @@ def similarSentence(request):
         elif data['type']=="rally":
             obj = rallySen.objects.create(lesson=data['query'])
         elif data['type']=="calamity":
-            obj = calamitySen.objects.create(lesson=data['query'], injured= data['injured'], peopleAffected=data['peopleAffected'],cost= data['cost'],police= data['police'],ambulance=data['ambulance'],ndrfPersonnels=data['ndrfPersonnels'])
+            obj = calamitySen.objects.create(lesson=data['query'])
         elif data['type']=="epidemic":
             obj = epidemicSen.objects.create(lesson=data['query'])
         elif data['type']=="publicGathering":
             obj = publicGatheringSen.objects.create(lesson=data['query'])
-        
+        res[0]['index_new']=obj.pk
+        new_id=obj.pk
+        index_bert.add_with_ids(new_vector, np.array([new_id]))
+        # print(new_id)
+        faiss.write_index(index_bert, data['type']+'_data.bin')
     res=json.dumps(res)
     return JsonResponse(res,status=status.HTTP_200_OK, safe=False)
 

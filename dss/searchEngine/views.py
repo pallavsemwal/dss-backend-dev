@@ -16,7 +16,7 @@ myclient = pymongo.MongoClient("mongodb+srv://dss:P8NKXqiTp3tN3vNt@dss-search.uj
 mydb = myclient["dss-search"]
 # print(mydb)
 # mydb.create_collection('searchLinks')
-mycol=mydb['searchResult']
+mycol=mydb['search_new3']
 # print(mycol)
 
 @api_view(['GET'])
@@ -26,10 +26,10 @@ def searchQuery(request):
     result = mycol.aggregate([
         {
             '$search': {
-                'index': 'default', 
+                'index': 'default-1', 
                 'text': {
                     'query': q, 
-                    'path': 'searchItem', 
+                    'path': 'body', 
                     'fuzzy': {
                         'maxEdits': 2
                     }
@@ -38,8 +38,13 @@ def searchQuery(request):
         }, {
             '$project': {
                 '_id': 1, 
-                'searchItem': 1, 
-                'description': 1, 
+                'body': 1, 
+                'title': 1,
+                'link':1,
+                'department':1,
+                'sector':1,
+                'extra_keyword':1,
+                'count':1, 
                 'score': {
                     '$meta': 'searchScore'
                 }
