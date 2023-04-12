@@ -36,7 +36,7 @@ import random
 # nlp = spacy.load('en_core_web_lg')
 import pickle
 
-model=pickle.load(open('./sentenceSimilarity/saved_model.sav','rb'))
+# model=pickle.load(open('./sentenceSimilarity/saved_model.sav','rb'))
 
 #these indexes should be reloaded periodically using cronjob
 
