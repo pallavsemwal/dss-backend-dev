@@ -1,27 +1,27 @@
-import pandas as pd
-import numpy as np
-# from sentence_transformers import SentenceTransformer
-# import faiss
-# import joblib
+# import pandas as pd
+# import numpy as np
+# # from sentence_transformers import SentenceTransformer
+# # import faiss
+# # import joblib
 
-# crime_sen=pd.read_csv(r"C:\Users\ankit\OneDrive\Desktop\dss_data\crime_final.csv")
-# calamity_sen=pd.read_csv(r"C:\Users\ankit\OneDrive\Desktop\dss_data\calamity_final.csv")
-# epidemic_sen=pd.read_csv(r"C:\Users\ankit\OneDrive\Desktop\dss_data\epidemic_final.csv")
-# publicGathering_sen=pd.read_csv(r"C:\Users\ankit\OneDrive\Desktop\dss_data\unique_sen_public_gathering.csv")
-# rally_sen=pd.read_csv(r"C:\Users\ankit\OneDrive\Desktop\dss_data\rally_final.csv")
+# crime_sen=pd.read_csv(r"C:\Users\ankit\OneDrive\Documents\crime1.csv")
+# calamity_sen=pd.read_csv(r"C:\Users\ankit\OneDrive\Documents\cal.csv")
+# epidemic_sen=pd.read_csv(r"C:\Users\ankit\OneDrive\Documents\epidemic1.csv")
+# publicGathering_sen=pd.read_csv(r"C:\Users\ankit\OneDrive\Documents\pubgat.csv")
+# rally_sen=pd.read_csv(r"C:\Users\ankit\OneDrive\Documents\rally1.csv")
 # print(len(calamity_sen))
 
-# model = SentenceTransformer('all-MiniLM-L6-v2')
-# crime_encoded_data = model.encode(crime_sen['Lesson Learnt'].tolist())
-# calamity_encoded_data = model.encode(calamity_sen['Lesson Learnt'].tolist())
-# epidemic_encoded_data = model.encode(epidemic_sen['Lesson Learnt'].tolist())
-# publicGathering_encoded_data = model.encode(publicGathering_sen.Lesson.tolist())
-# rally_encoded_data = model.encode(rally_sen['Lesson Learnt'].tolist())
+# # model = SentenceTransformer('all-MiniLM-L6-v2')
+# # crime_encoded_data = model.encode(crime_sen['Lesson Learnt'].tolist())
+# # calamity_encoded_data = model.encode(calamity_sen['Lesson Learnt'].tolist())
+# # epidemic_encoded_data = model.encode(epidemic_sen['Lesson Learnt'].tolist())
+# # publicGathering_encoded_data = model.encode(publicGathering_sen.Lesson.tolist())
+# # rally_encoded_data = model.encode(rally_sen['Lesson Learnt'].tolist())
 
 
 
-# filename= 'saved_model.sav'
-# saved_model=joblib.dump(model,filename)
+# # filename= 'saved_model.sav'
+# # saved_model=joblib.dump(model,filename)
 
 # faiss.normalize_L2(crime_encoded_data)
 # crime_index_bert = faiss.IndexIDMap(faiss.IndexFlatIP(384))

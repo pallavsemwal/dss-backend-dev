@@ -12,13 +12,13 @@ class PublicGathering(models.Model):
     government = models.BooleanField(default=False)
     attendance = models.IntegerField(blank=False)
     close = models.BooleanField(default = False)
-    location = models.CharField( max_length=50, blank = False)
+    location = models.TextField(blank = False)
     police = models.IntegerField(blank=False, default=0)
     ambulance = models.IntegerField(blank=False, default=0)
     firefighters = models.IntegerField(blank=False, default=0)
     date = models.DateField(blank=True, null=True)
     duration = models.IntegerField(blank=False)
-    lessons_learnt = models.TextField(blank=False)
+    lesson_learnt = models.TextField(blank=False)
 
 def __str__(self):
         return self.title
