@@ -1,83 +1,38 @@
 from django.db import models
+from details.models.calamity import Calamity
+from details.models.crime import Crime
+from details.models.epidemic import Epidemic
+from details.models.publicGathering import PublicGathering
+from details.models.rally import Rally
 
 # Create your models here.
 class crimeSen(models.Model):
     index=models.AutoField(primary_key=True)
-    title=models.TextField()
-    location=models.TextField(null=True)
-    date=models.TextField(null=True)
+    detailId=models.ForeignKey(Crime,on_delete=models.CASCADE)
     lesson=models.TextField(null=False)
     count=models.IntegerField(default=1)
-    
 
 class calamitySen(models.Model):
     index=models.AutoField(primary_key=True)
-    title=models.TextField()
-    dead=models.IntegerField(default=100)
-    injured=models.IntegerField(default=100)
-    peopleAffected=models.IntegerField(default=100)
-    cost=models.IntegerField(default=100)
-    police=models.IntegerField(default=100)
-    ambulance=models.IntegerField(default=100)
-    ndrfPersonnels=models.IntegerField(default=100)
+    detailId=models.ForeignKey(Calamity,on_delete=models.CASCADE)
     lesson=models.TextField(null=False)
     count=models.IntegerField(default=1)
 
 class epidemicSen(models.Model):
-    class Type(models.IntegerChoices):
-        Deadly=1
-        Infectious=2
-        Seasonal=3
-
     index=models.AutoField(primary_key=True)
-    title=models.TextField()
-    infected=models.IntegerField(default=100)
-    cured=models.IntegerField(default=100)
-    died=models.IntegerField(default=100)
-    year=models.TextField(null=True)
-    hospitalBed=models.IntegerField(default=100)
-    healthStaff=models.IntegerField(default=100)
-    type=models.IntegerField(choices=Type.choices, default=Type.Seasonal)
+    detailId=models.ForeignKey(Epidemic,on_delete=models.CASCADE)
     lesson=models.TextField(null=False)
     count=models.IntegerField(default=1)
 
 
-
 class publicGatheringSen(models.Model):
-    class Type(models.IntegerChoices):
-        Political=1
-        Social=2
-        Protest=3
-        Government=4
-        Religious=5
-    
     index=models.AutoField(primary_key=True)
-    title=models.TextField()
-    type=models.IntegerField(choices=Type.choices, default=Type.Protest)
-    attendance=models.IntegerField(default=100)
-    police=models.IntegerField(default=100)
-    ambulance=models.IntegerField(default=100)
-    fireFighter=models.IntegerField(default=100)
-    location=models.TextField(null=False)
-    date=models.TextField(null=True)
+    detailId=models.ForeignKey(PublicGathering,on_delete=models.CASCADE)
     lesson=models.TextField(null=False)
     count=models.IntegerField(default=1)
 
 class rallySen(models.Model):
-    class Type(models.IntegerChoices):
-        Political=1
-        Social=2
-        Protest=3
-        Government=4
-        Religious=5
-
     index=models.AutoField(primary_key=True)
-    title=models.TextField()
-    attendance=models.IntegerField(default=100)
-    police=models.IntegerField(default=100)
-    ambulance=models.IntegerField(default=100)
-    fireFighter=models.IntegerField(default=100)
-    location=models.TextField(null=False)
-    type=models.IntegerField(choices=Type.choices, default=Type.Protest)
+    detailId=models.ForeignKey(Rally,on_delete=models.CASCADE)
     lesson=models.TextField(null=False)
     count=models.IntegerField(default=1)
