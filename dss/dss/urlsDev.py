@@ -26,12 +26,13 @@ from meetings.views import getAllDepartments
 from graphene_file_upload.django import FileUploadGraphQLView
 from django.urls import path, include 
 from django.conf import settings
+from rest_framework_simplejwt import views as jwt_views
 from django.conf.urls.static import static
 #TODO not csrf exempt, similary for graphql not csrf exempt: https://www.techiediaries.com/django-react-forms-csrf-axios/
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('graphql', csrf_exempt(FileUploadGraphQLView.as_view(graphiql=True))),
-    path('api-token-auth/', obtain_jwt_token),
+    path('api-token-auth/', jwt_views.TokenObtainPairView.as_view()),
     path('api-token-refresh/', refresh_jwt_token),
     path('api-token-verify/', verify_jwt_token),
     path('getDistrictNames/', get_district_name_view),
