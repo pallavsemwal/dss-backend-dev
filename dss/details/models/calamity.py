@@ -13,8 +13,8 @@ class Calamity(models.Model):
         OTHER = "Other"
 
     owner = models.ForeignKey('auth.User', on_delete=models.CASCADE)
-    title = models.CharField(blank=False)
-    calamity_type = models.CharField(choices=CalamityTypes.choices, default=CalamityTypes.OTHER)
+    title = models.TextField(blank=False)
+    calamity_type = models.CharField(max_length=20, choices=CalamityTypes.choices, default=CalamityTypes.OTHER)
     total_cost = models.BigIntegerField(default=0)
     injured = models.IntegerField(default=0)
     dead = models.IntegerField(default=0)
@@ -24,7 +24,7 @@ class Calamity(models.Model):
     police = models.IntegerField(blank=False, default=0)
     ambulance = models.IntegerField(blank=False, default=0)
     ndrf = models.IntegerField(blank=False, default=0)
-    lesson_learnt = models.TextField(blank=True,null=True)
+    lesson_learnt = models.TextField(blank=True)
 
 
 def __str__(self):

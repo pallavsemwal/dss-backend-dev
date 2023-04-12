@@ -10,7 +10,7 @@ from .models import lawAndOrder
 from .models import rally
 from .models import calamity
 from .models import crime
-#from .models import epidemic
+from .models import epidemic
 from .models import publicGathering
 from .models import department
 

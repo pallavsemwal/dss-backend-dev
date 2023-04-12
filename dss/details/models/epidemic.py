@@ -3,8 +3,8 @@ from django.contrib.postgres.fields import JSONField
 
 class Epidemic(models.Model):
     owner = models.ForeignKey('auth.User', on_delete=models.CASCADE)
-    title = models.CharField(default="Flu")
-    epidemic_type = models.CharField(default="trivial")
+    title = models.TextField( blank=False)
+    epidemic_type = models.CharField(max_length=50, default="trivial")
     total_infected = models.IntegerField(blank=False, default=0)
     cured = models.IntegerField(blank=False, default=0)
     died = models.IntegerField(blank=False, default=0)
@@ -13,7 +13,7 @@ class Epidemic(models.Model):
     police = models.IntegerField(blank=False, default=0)
     hospitalbeds = models.IntegerField(blank=False, default=0)
     healthstaff = models.IntegerField(blank=False, default=0)
-    lesson_learnt = models.TextField(blank=True,null=True)
+    lesson_learnt = models.TextField(blank=False)
     
 
 def __str__(self):
