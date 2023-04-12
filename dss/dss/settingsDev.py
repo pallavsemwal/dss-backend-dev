@@ -128,10 +128,10 @@ DATABASES = {
         # "HOST": url.hostname,
         # "PORT": url.port,
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'dss',
+        'HOST': 'database-1.cc2k4r4ybonz.ap-south-1.rds.amazonaws.com',
+        'NAME': 'postgres',
         'USER': 'postgres',
-        'PASSWORD': 'Dss@123',
-        'HOST': '89.116.230.51',
+        'PASSWORD': 'dss12345',
         'PORT': '5432'
     }
 }
