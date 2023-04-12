@@ -31,7 +31,8 @@ import datetime
 import re
 from django.contrib.auth.models import User
 import random
-import sklearn.metrics.pairwise.cosine_similarity
+import sklearn
+from sklearn import metrics
 #spacy.cli.download("en_core_web_lg")
 # import spacy
 # nlp = spacy.load('en_core_web_lg')
@@ -231,11 +232,11 @@ def updateCount(request):
 
 
 @api_view(['POST'])
-def cosineSimilarity(request):
+def cosineSimilarityMat(request):
     d= JSONParser().parse(request)
     senArray=d['senArray']
     senArray_encoded=model.encode(senArray.tolist())
-    cosineSimilarityMatrix=cosineSimilarity(senArray_encoded,senArray_encoded)
+    cosineSimilarityMatrix=metrics.cosine_similarity(senArray_encoded,senArray_encoded)
     d=json.dumps(cosineSimilarityMatrix)
     return JsonResponse(d,status=status.HTTP_200_OK, safe=False)
 

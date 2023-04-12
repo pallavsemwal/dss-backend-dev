@@ -7,4 +7,5 @@ urlpatterns = [
     path('addLesson',views.addLesson),
     path('lessonLearnt',views.lessonLearnt),
     path('updateCount',views.updateCount),
+    path('cosineSimilarityMat',views.cosineSimilarityMat),
 ]
