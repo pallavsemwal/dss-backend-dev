@@ -18,9 +18,9 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework_jwt.views import obtain_jwt_token
-from rest_framework_jwt.views import refresh_jwt_token
-from rest_framework_jwt.views import verify_jwt_token
+# from rest_framework_jwt.views import obtain_jwt_token
+# from rest_framework_jwt.views import refresh_jwt_token
+# from rest_framework_jwt.views import verify_jwt_token
 from details.views import register_view, get_district_name_view, get_file_view,addDepartment
 from meetings.views import getAllDepartments
 from graphene_file_upload.django import FileUploadGraphQLView
@@ -33,8 +33,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('graphql', csrf_exempt(FileUploadGraphQLView.as_view(graphiql=True))),
     path('api-token-auth/', jwt_views.TokenObtainPairView.as_view()),
-    path('api-token-refresh/', refresh_jwt_token),
-    path('api-token-verify/', verify_jwt_token),
+    # path('api-token-refresh/', refresh_jwt_token),
+    # path('api-token-verify/', verify_jwt_token),
     path('getDistrictNames/', get_district_name_view),
     path('getAllDepartments/', getAllDepartments),
     path('register/', csrf_exempt(register_view)),
