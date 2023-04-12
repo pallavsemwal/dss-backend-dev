@@ -1,8 +1,8 @@
 import pandas as pd
 import numpy as np
-from sentence_transformers import SentenceTransformer
-import faiss
-import joblib
+# from sentence_transformers import SentenceTransformer
+# import faiss
+# import joblib
 
 # crime_sen=pd.read_csv(r"C:\Users\ankit\OneDrive\Desktop\dss_data\crime_final.csv")
 # calamity_sen=pd.read_csv(r"C:\Users\ankit\OneDrive\Desktop\dss_data\calamity_final.csv")
@@ -11,7 +11,7 @@ import joblib
 # rally_sen=pd.read_csv(r"C:\Users\ankit\OneDrive\Desktop\dss_data\rally_final.csv")
 # print(len(calamity_sen))
 
-model = SentenceTransformer('all-MiniLM-L6-v2')
+# model = SentenceTransformer('all-MiniLM-L6-v2')
 # crime_encoded_data = model.encode(crime_sen['Lesson Learnt'].tolist())
 # calamity_encoded_data = model.encode(calamity_sen['Lesson Learnt'].tolist())
 # epidemic_encoded_data = model.encode(epidemic_sen['Lesson Learnt'].tolist())
@@ -20,8 +20,8 @@ model = SentenceTransformer('all-MiniLM-L6-v2')
 
 
 
-filename= 'saved_model.sav'
-saved_model=joblib.dump(model,filename)
+# filename= 'saved_model.sav'
+# saved_model=joblib.dump(model,filename)
 
 # faiss.normalize_L2(crime_encoded_data)
 # crime_index_bert = faiss.IndexIDMap(faiss.IndexFlatIP(384))

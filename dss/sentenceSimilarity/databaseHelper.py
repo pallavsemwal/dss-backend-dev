@@ -7,7 +7,7 @@ from  sentenceSimilarity.models import crimeSen,calamitySen,epidemicSen,publicGa
 from rest_framework.parsers import JSONParser 
 import pandas as pd
 import numpy as np
-from sentence_transformers import SentenceTransformer
+# from sentence_transformers import SentenceTransformer
 
 
 crime_sen=pd.read_csv(r"C:\Users\ankit\Downloads\DSS- Lesson Learned For Law and order  - Crime (1).csv")
