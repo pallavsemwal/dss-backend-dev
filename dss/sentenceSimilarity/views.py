@@ -27,7 +27,7 @@ from details.models.rally import Rally
 from  sentenceSimilarity.models import crimeSen,calamitySen,epidemicSen,publicGatheringSen,rallySen
 from datetime import datetime
 import datetime
-import spacy.cli
+# import spacy.cli
 import re
 from django.contrib.auth.models import User
 import random
@@ -35,9 +35,9 @@ import sklearn.metrics.pairwise.cosine_similarity
 #spacy.cli.download("en_core_web_lg")
 # import spacy
 # nlp = spacy.load('en_core_web_lg')
+import pickle
 
-
-model=joblib.load('./sentenceSimilarity/saved_model.sav')
+model=pickle.load(open('./sentenceSimilarity/saved_model.sav','rb'))
 
 #these indexes should be reloaded periodically using cronjob
 
