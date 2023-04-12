@@ -27,7 +27,7 @@ from details.models.rally import Rally
 from  sentenceSimilarity.models import crimeSen,calamitySen,epidemicSen,publicGatheringSen,rallySen
 from datetime import datetime
 import datetime
-import spacy.cli
+# import spacy.cli
 import re
 from django.contrib.auth.models import User
 import random
