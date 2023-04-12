@@ -12,13 +12,13 @@ class Rally(models.Model):
     government = models.BooleanField(default=False)
     attendance = models.IntegerField(blank=False)
     stationary = models.BooleanField(default = False)
-    start_location = models.CharField( max_length=50, blank = False)
-    end_location = models.CharField(max_length=50, blank = True, null=True )
+    start_location = models.CharField( max_length=50, blank = False,default="Random")
+    end_location = models.CharField(max_length=50, blank = True, null=True ,default="Random")
     police = models.IntegerField(blank=False, default=0)
     ambulance = models.IntegerField(blank=False, default=0)
     firefighters = models.IntegerField(blank=False, default=0)
     date = models.DateField(blank=True, null=True)
-    lessons_learnt = models.TextField(blank = False)
+    lesson_learnt = models.TextField(blank = False)
 
 def __str__(self):
         return self.rally_title

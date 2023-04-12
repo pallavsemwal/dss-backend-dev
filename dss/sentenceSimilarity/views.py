@@ -19,8 +19,21 @@ from rest_framework.parsers import JSONParser
 from rest_framework import status
 from django.core import serializers
 from django.db import IntegrityError
+from details.models.calamity import Calamity
+from details.models.crime import Crime
+from details.models.epidemic import Epidemic
+from details.models.publicGathering import PublicGathering
+from details.models.rally import Rally
 from  sentenceSimilarity.models import crimeSen,calamitySen,epidemicSen,publicGatheringSen,rallySen
 from datetime import datetime
+import datetime
+import spacy.cli
+import re
+from django.contrib.auth.models import User
+import random
+#spacy.cli.download("en_core_web_lg")
+# import spacy
+# nlp = spacy.load('en_core_web_lg')
 
 
 model=joblib.load('./sentenceSimilarity/saved_model.sav')
@@ -179,15 +192,15 @@ def addLesson(request):
 def lessonLearnt(request):
     data=JSONParser().parse(request)  #expecting type of law and order
     if data['type']=='crime':
-        d=serializers.serialize('json', crimeSen.objects.all())
+        d=serializers.serialize('json', Crime.objects.all())
     elif data['type']=='calamity':
-        d=serializers.serialize('json', calamitySen.objects.all())
+        d=serializers.serialize('json', Calamity.objects.all())
     elif data['type']=='epidemic':
-        d=serializers.serialize('json', epidemicSen.objects.all())
+        d=serializers.serialize('json', Epidemic.objects.all())
     elif data['type']=='rally':
-        d=serializers.serialize('json', rallySen.objects.all())
+        d=serializers.serialize('json', Rally.objects.all())
     elif data['type']=='publicGathering':
-        d=serializers.serialize('json', publicGatheringSen.objects.all())
+        d=serializers.serialize('json', PublicGathering.objects.all())
     d=json.loads(d)
     return JsonResponse(d,status=status.HTTP_200_OK, safe=False)
 
@@ -214,6 +227,51 @@ def updateCount(request):
         publicGatheringSen.objects.filter(pk=id).update(count=obj.count+1)
 
     return HttpResponse("count updated")
+
+
+# def preprocessing(sentence):
+ 
+#     #remove distracting single quotes
+#     sentence = re.sub('\'','',sentence)
+#     #replace extra spaces with single space
+#     sentence = re.sub(' +',' ',sentence)
+
+#     #remove unwanted lines starting from special charcters
+#     sentence = re.sub(r'\n: \'\'.*','',sentence)
+#     sentence = re.sub(r'\n!.*','',sentence)
+#     sentence = re.sub(r'^:\'\'.*','',sentence)
+    
+#     #remove non-breaking new line characters
+#     sentence = re.sub(r'\n',' ',sentence)
+
+#     return sentence
+
+
+# @api_view(['POST'])
+# def databaseHelper(request):
+#     rally_sen=pd.read_csv(r"C:\Users\ankit\Downloads\DSS- Lesson Learned For Law and order  - Rally (2).csv")
+#     for i in range(len(rally_sen)):
+#         u_id=request.user.id
+#         person=User.objects.get(pk=u_id)
+#         obj=Rally.objects.create(
+#             owner=person,rally_title=rally_sen.iloc[i]['Title'],attendance=random.randint(100,100000),
+#             lesson_learnt=rally_sen.iloc[i]['Lesson Learned'],
+#             date=datetime.date.today(),
+#             police=random.randint(10,100),ambulance=random.randint(100,1000),
+#             firefighters=random.randint(100,10000)
+#         )
+#         text=preprocessing(rally_sen.iloc[i]['Lesson Learned'])
+#         sentences = [str(i) for i in nlp(text).sents]
+#         for sen in sentences:
+#             d_id=obj.pk
+#             detailInst=Rally.objects.get(pk=d_id)
+#             newobj=rallySen.objects.create(detailId=detailInst,lesson=sen)
+#             print(newobj.pk)
+
+#     return HttpResponse("All rally Data Added")
+
+        
+
 
 
 
