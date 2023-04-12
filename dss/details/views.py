@@ -4,7 +4,7 @@ from django.views.decorators.http import require_POST, require_GET
 from rest_framework.decorators import permission_classes, authentication_classes
 from rest_framework.decorators import api_view
 from django.http import HttpResponse, HttpResponseBadRequest, HttpResponseServerError, FileResponse, HttpRequest
-from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+# from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from django.db import IntegrityError
 from django.conf import settings
 from .models.profile import Profile
@@ -17,7 +17,7 @@ from django.contrib.auth import get_user_model
 from django.http.response import JsonResponse
 from rest_framework.parsers import JSONParser 
 from rest_framework import status
-
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 @require_POST
 def register_view(request):
@@ -66,7 +66,7 @@ def get_district_name_view(request):
 @require_GET
 def get_file_view(request, file):
     try:
-        user_jwt = JSONWebTokenAuthentication().authenticate(request)
+        user_jwt = JWTAuthentication().authenticate(request)
         if user_jwt is not None:
             user = user_jwt[0]
             print(user)
