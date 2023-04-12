@@ -234,10 +234,8 @@ def updateCount(request):
 def cosineSimilarity(request):
     d= JSONParser().parse(request)
     senArray=d['senArray']
-    querySenArray=d['querySenArray']
     senArray_encoded=model.encode(senArray.tolist())
-    querySenArray_encoded=model.encode(querySenArray.tolist())
-    cosineSimilarityMatrix=cosineSimilarity(querySenArray_encoded,senArray_encoded)
+    cosineSimilarityMatrix=cosineSimilarity(senArray_encoded,senArray_encoded)
     d=json.dumps(cosineSimilarityMatrix)
     return JsonResponse(d,status=status.HTTP_200_OK, safe=False)
 
