@@ -143,15 +143,15 @@ def similarSentence(request):
         faiss.normalize_L2(new_vector)
         #print(new_vector)    
         if data['type']=="crime":
-            obj = crimeSen.objects.create(lesson=data['query'])
+            obj = crimeSen.objects.create(lesson=data['query'],detailId=data['id'])
         elif data['type']=="rally":
-            obj = rallySen.objects.create(lesson=data['query'])
+            obj = rallySen.objects.create(lesson=data['query'],detailId=data['id'])
         elif data['type']=="calamity":
-            obj = calamitySen.objects.create(lesson=data['query'])
+            obj = calamitySen.objects.create(lesson=data['query'],detailId=data['id'])
         elif data['type']=="epidemic":
-            obj = epidemicSen.objects.create(lesson=data['query'])
+            obj = epidemicSen.objects.create(lesson=data['query'],detailId=data['id'])
         elif data['type']=="publicGathering":
-            obj = publicGatheringSen.objects.create(lesson=data['query'])
+            obj = publicGatheringSen.objects.create(lesson=data['query'],detailId=data['id'])
         res[0]['index_new']=obj.pk
         new_id=obj.pk
         index_bert.add_with_ids(new_vector, np.array([new_id]))
@@ -170,15 +170,15 @@ def addLesson(request):
     #print(new_vector)
     
     if data['type']=="crime":
-        obj = crimeSen.objects.create(lesson=data['text'])
+        obj = crimeSen.objects.create(lesson=data['text'],detailId=data['id'])
     elif data['type']=="rally":
-        obj = rallySen.objects.create(lesson=data['text'])
+        obj = rallySen.objects.create(lesson=data['text'],detailId=data['id'])
     elif data['type']=="calamity":
-        obj = calamitySen.objects.create(lesson=data['text'])
+        obj = calamitySen.objects.create(lesson=data['text'],detailId=data['id'])
     elif data['type']=="epidemic":
-        obj = epidemicSen.objects.create(lesson=data['text'])
+        obj = epidemicSen.objects.create(lesson=data['text'],detailId=data['id'])
     elif data['type']=="publicGathering":
-        obj = publicGatheringSen.objects.create(lesson=data['text'])
+        obj = publicGatheringSen.objects.create(lesson=data['text'],detailId=data['id'])
 
     print(obj.pk)
     new_id=obj.pk
@@ -237,7 +237,29 @@ def cosineSimilarityMat(request):
     senArray=d['senArray']
     senArray_encoded=model.encode(senArray.tolist())
     cosineSimilarityMatrix=metrics.cosine_similarity(senArray_encoded,senArray_encoded)
-    d=json.dumps(cosineSimilarityMatrix)
+    res={}
+    index_dict = {}
+
+    for i, row in enumerate(cosineSimilarityMatrix):
+        # Enumerate the row to get the index and element
+        row_with_index = list(enumerate(row))
+        # Sort the row in descending order by the element
+        row_sorted = sorted(row_with_index, key=lambda x: x[1], reverse=True)
+        # Get the index and element of the second maximum element of the row
+        second_max_index, second_max_element = row_sorted[1]
+        # Add the row index to the list of row indices for the corresponding column index in the dictionary
+        if second_max_index not in index_dict:
+            index_dict[second_max_index] = [i]
+        else:
+            index_dict[second_max_index].append(i)
+    
+    for key in index_dict.keys():
+        x=[]
+        for i in index_dict[i]:
+            x.append(senArray[i])
+        res[senArray[key]]=x
+
+    d=json.dumps(res)
     return JsonResponse(d,status=status.HTTP_200_OK, safe=False)
 
     
