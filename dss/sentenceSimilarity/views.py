@@ -236,28 +236,38 @@ def cosineSimilarityMat(request):
     d= JSONParser().parse(request)
     senArray=d['senArray']
     senArray_encoded=model.encode(senArray.tolist())
-    cosineSimilarityMatrix=metrics.cosine_similarity(senArray_encoded,senArray_encoded)
+    cosineSimilarityMatrix=np.array(metrics.cosine_similarity(senArray_encoded,senArray_encoded))
     res={}
     index_dict = {}
-
-    for i, row in enumerate(cosineSimilarityMatrix):
-        # Enumerate the row to get the index and element
-        row_with_index = list(enumerate(row))
-        # Sort the row in descending order by the element
-        row_sorted = sorted(row_with_index, key=lambda x: x[1], reverse=True)
-        # Get the index and element of the second maximum element of the row
-        second_max_index, second_max_element = row_sorted[1]
-        # Add the row index to the list of row indices for the corresponding column index in the dictionary
-        if second_max_index not in index_dict:
-            index_dict[second_max_index] = [i]
+    cosineSimilarityMatrix-=np.eye(cosineSimilarityMatrix.shape[0])
+    result = np.array([[np.max(row), num_row, np.argmax(row)] for num_row, row in enumerate(cosineSimilarityMatrix)])
+    for row in result:
+        if senArray[row[2]] not in res:
+            res[senArray[row[2]]]=[(senArray[row[1]],row[0])]
         else:
-            index_dict[second_max_index].append(i)
+            res[senArray[row[2]]].append((senArray[row[1]],row[0]))
     
-    for key in index_dict.keys():
-        x=[]
-        for i in index_dict[i]:
-            x.append(senArray[i])
-        res[senArray[key]]=x
+
+
+
+    # for i, row in enumerate(cosineSimilarityMatrix):
+    #     # Enumerate the row to get the index and element
+    #     row_with_index = list(enumerate(row))
+    #     # Sort the row in descending order by the element
+    #     row_sorted = sorted(row_with_index, key=lambda x: x[1], reverse=True)
+    #     # Get the index and element of the second maximum element of the row
+    #     second_max_index, second_max_element = row_sorted[1]
+    #     # Add the row index to the list of row indices for the corresponding column index in the dictionary
+    #     if second_max_index not in index_dict:
+    #         index_dict[second_max_index] = [i]
+    #     else:
+    #         index_dict[second_max_index].append(i)
+    
+    # for key in index_dict.keys():
+    #     x=[]
+    #     for i in index_dict[i]:
+    #         x.append(senArray[i])
+    #     res[senArray[key]]=x
 
     d=json.dumps(res)
     return JsonResponse(d,status=status.HTTP_200_OK, safe=False)
