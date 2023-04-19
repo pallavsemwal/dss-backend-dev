@@ -1,4 +1,4 @@
-from keywords import result
+from keywords import keyword_dict
 from duckduckgo_search import ddg
 import time
 
@@ -11,20 +11,21 @@ addon_keywords={"awards":['recognized awards site:.gov.in','recognized awards si
 
 
 def scrape(request):
-    for q in result:
-        for addon in addon_keywords:
-            for regex in addon_keywords[addon]:
-                query=q+" "+regex
-                
-                outputs = ddg(query, region='hi-in', safesearch='moderate', time='y',max_results=10,page=1)
-                print(query)
-                if outputs is None:
-                    print("No result")
-                else:
-                    print("results")
-                    # for res in outputs:
-                    #     print(res)
-                time.sleep(2)
+    for key in keyword_dict:
+        for q in key:
+            for addon in addon_keywords:
+                for regex in addon_keywords[addon]:
+                    query=q+" "+regex
+                    
+                    outputs = ddg(query, region='hi-in', safesearch='moderate', time='y',max_results=10,page=1)
+                    print(query)
+                    if outputs is None:
+                        print("No result")
+                    else:
+                        print("results")
+                        # for res in outputs:
+                        #     print(res)
+                    time.sleep(2)
     return "success"
 
 scrape("abx")
